@@ -17,8 +17,8 @@ namespace PMA.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public User()
         {
+            this.ProjectToUsers = new HashSet<ProjectToUser>();
             this.Skills = new HashSet<Skill>();
-            this.Projects = new HashSet<Project>();
         }
     
         public int id { get; set; }
@@ -27,14 +27,15 @@ namespace PMA.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
         public string email { get; set; }
-        public int phoneNo { get; set; }
+        public string phoneNo { get; set; }
         public string job { get; set; }
         public byte[] image { get; set; }
+        //1= Admin, 2= PM, 3= Developer, 4= Customer, 5= TL
         public int type { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Skill> Skills { get; set; }
+        public virtual ICollection<ProjectToUser> ProjectToUsers { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Project> Projects { get; set; }
+        public virtual ICollection<Skill> Skills { get; set; }
     }
 }

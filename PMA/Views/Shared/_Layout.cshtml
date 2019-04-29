@@ -16,14 +16,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            @Html.ActionLink("Project Manager App", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <h4 style="color:lightsteelblue">Project Manager App</h4>
         </div>
         <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-                <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                <li>@Html.ActionLink("Developer", "Details","Developer", new{ id = 1}, null)</li>
+
                 <li>@Html.ActionLink("About", "About", "Home")</li>
-                <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                <li style="position: absolute; right:10px">@Html.ActionLink("Logout", "Logout", "Home")</li>
             </ul>
         </div>
     </div>

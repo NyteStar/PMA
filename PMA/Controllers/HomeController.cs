@@ -24,6 +24,7 @@ namespace PMA.Controllers
         [HttpPost]
         public ActionResult login(FormCollection form)
         {
+
             string username = form["username"].ToString();
             string password = form["password"].ToString();
             var usr = (from u in db.Users
@@ -31,6 +32,10 @@ namespace PMA.Controllers
                 select u).FirstOrDefault();
             if (usr != null)
             {
+                HttpCookie sessionCookie = new HttpCookie("sessionCookie");
+                sessionCookie.Value = usr.id.ToString();
+                Response.Cookies.Add(sessionCookie);
+
                 if (usr.type == 1) //Admin
                 {
                     return RedirectToAction("Index", "Dashboard");
@@ -38,7 +43,7 @@ namespace PMA.Controllers
 
                 else if (usr.type == 3) //Developer
                 {
-                    return RedirectToAction("Details", "Developer", new { id = usr.id});
+                    return RedirectToAction("Details", "Developer");
                 }
             }
             TempData["message"] = "Wrong Username or Password!";
@@ -57,6 +62,17 @@ namespace PMA.Controllers
             ViewBag.Message = "Your contact page.";
 
             return View();
+        }
+
+        public ActionResult Logout()
+        {
+            var expiredCookie = new HttpCookie("sessionCookie")
+            {
+                Expires = DateTime.Now.AddDays(-1)
+            };
+            Response.Cookies.Add(expiredCookie);
+            Request.Cookies.Clear();
+            return View("login");
         }
     }
 }

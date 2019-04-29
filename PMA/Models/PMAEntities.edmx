@@ -1,0 +1,318 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="PMAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PMA.dbo.DeveloperToSkills' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="DeveloperToSkills">
+          <Key>
+            <PropertyRef Name="d_ID" />
+            <PropertyRef Name="s_ID" />
+          </Key>
+          <Property Name="d_ID" Type="int" Nullable="false" />
+          <Property Name="s_ID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="p_ID" />
+          </Key>
+          <Property Name="p_ID" Type="int" Nullable="false" />
+          <Property Name="pName" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="pDesc" Type="nvarchar(max)" />
+          <Property Name="pPM_ID" Type="int" Nullable="false" />
+          <Property Name="pCust_ID" Type="int" Nullable="false" />
+          <Property Name="pStatus" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProjectToUser">
+          <Key>
+            <PropertyRef Name="r_ID" />
+          </Key>
+          <Property Name="r_ID" Type="int" Nullable="false" />
+          <Property Name="p_ID" Type="int" Nullable="false" />
+          <Property Name="u_ID" Type="int" Nullable="false" />
+          <Property Name="response" Type="int" />
+        </EntityType>
+        <EntityType Name="Skills">
+          <Key>
+            <PropertyRef Name="s_ID" />
+          </Key>
+          <Property Name="s_ID" Type="int" Nullable="false" />
+          <Property Name="s_Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="username" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="password" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="email" Type="nvarchar" MaxLength="250" Nullable="false" />
+          <Property Name="phoneNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="job" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="image" Type="image" />
+          <Property Name="type" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_DeveloperToSkills_Skills">
+          <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+          <End Role="DeveloperToSkills" Type="Self.DeveloperToSkills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Skills">
+              <PropertyRef Name="s_ID" />
+            </Principal>
+            <Dependent Role="DeveloperToSkills">
+              <PropertyRef Name="s_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DeveloperToSkills_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="DeveloperToSkills" Type="Self.DeveloperToSkills" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="DeveloperToSkills">
+              <PropertyRef Name="d_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectToUser_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="ProjectToUser" Type="Self.ProjectToUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="p_ID" />
+            </Principal>
+            <Dependent Role="ProjectToUser">
+              <PropertyRef Name="p_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectToUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ProjectToUser" Type="Self.ProjectToUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProjectToUser">
+              <PropertyRef Name="u_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PMAModelStoreContainer">
+          <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProjectToUser" EntityType="Self.ProjectToUser" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="DeveloperToSkills" EntityType="Self.DeveloperToSkills" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [DeveloperToSkills].[d_ID] AS [d_ID], 
+    [DeveloperToSkills].[s_ID] AS [s_ID]
+    FROM [dbo].[DeveloperToSkills] AS [DeveloperToSkills]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_DeveloperToSkills_Skills" Association="Self.FK_DeveloperToSkills_Skills">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="DeveloperToSkills" EntitySet="DeveloperToSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DeveloperToSkills_User" Association="Self.FK_DeveloperToSkills_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="DeveloperToSkills" EntitySet="DeveloperToSkills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectToUser_Project" Association="Self.FK_ProjectToUser_Project">
+            <End Role="Project" EntitySet="Project" />
+            <End Role="ProjectToUser" EntitySet="ProjectToUser" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectToUser_User" Association="Self.FK_ProjectToUser_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ProjectToUser" EntitySet="ProjectToUser" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PMAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Project">
+          <Key>
+            <PropertyRef Name="p_ID" />
+          </Key>
+          <Property Name="p_ID" Type="Int32" Nullable="false" />
+          <Property Name="pName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="pDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="pPM_ID" Type="Int32" Nullable="false" />
+          <Property Name="pCust_ID" Type="Int32" Nullable="false" />
+          <Property Name="pStatus" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProjectToUsers" Relationship="Self.FK_ProjectToUser_Project" FromRole="Project" ToRole="ProjectToUser" />
+        </EntityType>
+        <EntityType Name="ProjectToUser">
+          <Key>
+            <PropertyRef Name="r_ID" />
+          </Key>
+          <Property Name="r_ID" Type="Int32" Nullable="false" />
+          <Property Name="p_ID" Type="Int32" Nullable="false" />
+          <Property Name="u_ID" Type="Int32" Nullable="false" />
+          <Property Name="response" Type="Int32" />
+          <NavigationProperty Name="Project" Relationship="Self.FK_ProjectToUser_Project" FromRole="ProjectToUser" ToRole="Project" />
+          <NavigationProperty Name="User" Relationship="Self.FK_ProjectToUser_User" FromRole="ProjectToUser" ToRole="User" />
+        </EntityType>
+        <EntityType Name="Skill">
+          <Key>
+            <PropertyRef Name="s_ID" />
+          </Key>
+          <Property Name="s_ID" Type="Int32" Nullable="false" />
+          <Property Name="s_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="Users" Relationship="Self.DeveloperToSkills" FromRole="Skills" ToRole="User" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="username" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="lastName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="phoneNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="job" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ProjectToUsers" Relationship="Self.FK_ProjectToUser_User" FromRole="User" ToRole="ProjectToUser" />
+          <NavigationProperty Name="Skills" Relationship="Self.DeveloperToSkills" FromRole="User" ToRole="Skills" />
+        </EntityType>
+        <Association Name="FK_ProjectToUser_Project">
+          <End Role="Project" Type="Self.Project" Multiplicity="1" />
+          <End Role="ProjectToUser" Type="Self.ProjectToUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Project">
+              <PropertyRef Name="p_ID" />
+            </Principal>
+            <Dependent Role="ProjectToUser">
+              <PropertyRef Name="p_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProjectToUser_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ProjectToUser" Type="Self.ProjectToUser" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="ProjectToUser">
+              <PropertyRef Name="u_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="DeveloperToSkills">
+          <End Role="Skills" Type="Self.Skill" Multiplicity="*" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="PMAEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Projects" EntityType="Self.Project" />
+          <EntitySet Name="ProjectToUsers" EntityType="Self.ProjectToUser" />
+          <EntitySet Name="Skills" EntityType="Self.Skill" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+          <AssociationSet Name="FK_ProjectToUser_Project" Association="Self.FK_ProjectToUser_Project">
+            <End Role="Project" EntitySet="Projects" />
+            <End Role="ProjectToUser" EntitySet="ProjectToUsers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProjectToUser_User" Association="Self.FK_ProjectToUser_User">
+            <End Role="User" EntitySet="Users" />
+            <End Role="ProjectToUser" EntitySet="ProjectToUsers" />
+          </AssociationSet>
+          <AssociationSet Name="DeveloperToSkills" Association="Self.DeveloperToSkills">
+            <End Role="Skills" EntitySet="Skills" />
+            <End Role="User" EntitySet="Users" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PMAModelStoreContainer" CdmEntityContainer="PMAEntities">
+          <EntitySetMapping Name="Projects">
+            <EntityTypeMapping TypeName="PMAModel.Project">
+              <MappingFragment StoreEntitySet="Project">
+                <ScalarProperty Name="p_ID" ColumnName="p_ID" />
+                <ScalarProperty Name="pName" ColumnName="pName" />
+                <ScalarProperty Name="pDesc" ColumnName="pDesc" />
+                <ScalarProperty Name="pPM_ID" ColumnName="pPM_ID" />
+                <ScalarProperty Name="pCust_ID" ColumnName="pCust_ID" />
+                <ScalarProperty Name="pStatus" ColumnName="pStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProjectToUsers">
+            <EntityTypeMapping TypeName="PMAModel.ProjectToUser">
+              <MappingFragment StoreEntitySet="ProjectToUser">
+                <ScalarProperty Name="r_ID" ColumnName="r_ID" />
+                <ScalarProperty Name="p_ID" ColumnName="p_ID" />
+                <ScalarProperty Name="u_ID" ColumnName="u_ID" />
+                <ScalarProperty Name="response" ColumnName="response" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Skills">
+            <EntityTypeMapping TypeName="PMAModel.Skill">
+              <MappingFragment StoreEntitySet="Skills">
+                <ScalarProperty Name="s_ID" ColumnName="s_ID" />
+                <ScalarProperty Name="s_Name" ColumnName="s_Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="PMAModel.User">
+              <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="password" ColumnName="password" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="phoneNo" ColumnName="phoneNo" />
+                <ScalarProperty Name="job" ColumnName="job" />
+                <ScalarProperty Name="image" ColumnName="image" />
+                <ScalarProperty Name="type" ColumnName="type" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="DeveloperToSkills" TypeName="PMAModel.DeveloperToSkills" StoreEntitySet="DeveloperToSkills">
+            <EndProperty Name="Skills">
+              <ScalarProperty Name="s_ID" ColumnName="s_ID" />
+            </EndProperty>
+            <EndProperty Name="User">
+              <ScalarProperty Name="id" ColumnName="d_ID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

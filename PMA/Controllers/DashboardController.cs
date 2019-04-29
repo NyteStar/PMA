@@ -11,7 +11,17 @@ namespace PMA.Controllers
         // GET: Dashboard
         public ActionResult Index()
         {
-            return View();
+            HttpCookie uCookie = Request.Cookies["sessionCookie"];
+
+            if (uCookie != null)
+            {
+                return View();
+            }
+
+            else
+            {
+                return RedirectToAction("login", "Home");
+            }
         }
     }
 }

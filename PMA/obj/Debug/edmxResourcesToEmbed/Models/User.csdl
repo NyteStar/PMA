@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PMAModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="p_ID" />
+    </Key>
+    <Property Name="p_ID" Type="Int32" Nullable="false" />
+    <Property Name="pName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="pDesc" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="pPM_ID" Type="Int32" Nullable="false" />
+    <Property Name="pCust_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.ProjectToUser" FromRole="Project" ToRole="User" />
+    <Property Name="pStatus" Type="Int32" Nullable="false" />
+    <Property Name="pRequest" Type="Int32" />
+  </EntityType>
+  <EntityType Name="Skill">
+    <Key>
+      <PropertyRef Name="s_ID" />
+    </Key>
+    <Property Name="s_ID" Type="Int32" Nullable="false" />
+    <Property Name="s_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.DeveloperToSkills" FromRole="Skills" ToRole="User" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="Int32" Nullable="false" />
+    <Property Name="username" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="password" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="firstName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="lastName" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="email" Type="String" MaxLength="250" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="phoneNo" Type="String" Nullable="false" />
+    <Property Name="job" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="image" Type="Binary" MaxLength="Max" FixedLength="false" />
+    <Property Name="type" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Skills" Relationship="Self.DeveloperToSkills" FromRole="User" ToRole="Skills" />
+    <NavigationProperty Name="Projects" Relationship="Self.ProjectToUser" FromRole="User" ToRole="Project" />
+  </EntityType>
+  <Association Name="DeveloperToSkills">
+    <End Role="Skills" Type="Self.Skill" Multiplicity="*" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+  </Association>
+  <Association Name="ProjectToUser">
+    <End Role="Project" Type="Self.Project" Multiplicity="*" />
+    <End Role="User" Type="Self.User" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="PMAEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Projects" EntityType="Self.Project" />
+    <EntitySet Name="Skills" EntityType="Self.Skill" />
+    <EntitySet Name="Users" EntityType="Self.User" />
+    <AssociationSet Name="DeveloperToSkills" Association="Self.DeveloperToSkills">
+      <End Role="Skills" EntitySet="Skills" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="ProjectToUser" Association="Self.ProjectToUser">
+      <End Role="Project" EntitySet="Projects" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

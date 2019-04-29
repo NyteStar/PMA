@@ -17,7 +17,7 @@ namespace PMA.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Project()
         {
-            this.Users = new HashSet<User>();
+            this.ProjectToUsers = new HashSet<ProjectToUser>();
         }
     
         public int p_ID { get; set; }
@@ -25,9 +25,14 @@ namespace PMA.Models
         public string pDesc { get; set; }
         public int pPM_ID { get; set; }
         public int pCust_ID { get; set; }
-        public bool PCompleted { get; set; }
-    
+        //0= New Request, 1= WIP, 2= Completed
+        public int pStatus { get; set; }
+        //NULL= No request, 1= Accept, 2= Reject, 3= Drop
+        public Nullable<int> pRequest { get; set; }
+        public string Pm { get; set; }
+        public string Cust { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> Users { get; set; }
+        public virtual ICollection<ProjectToUser> ProjectToUsers { get; set; }
     }
 }

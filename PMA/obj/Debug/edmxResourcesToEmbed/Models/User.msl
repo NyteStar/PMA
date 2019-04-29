@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="PMAModelStoreContainer" CdmEntityContainer="PMAEntities">
+    <EntitySetMapping Name="Projects">
+      <EntityTypeMapping TypeName="PMAModel.Project">
+        <MappingFragment StoreEntitySet="Project">
+          <ScalarProperty Name="pRequest" ColumnName="pRequest" />
+          <ScalarProperty Name="pStatus" ColumnName="pStatus" />
+          <ScalarProperty Name="p_ID" ColumnName="p_ID" />
+          <ScalarProperty Name="pName" ColumnName="pName" />
+          <ScalarProperty Name="pDesc" ColumnName="pDesc" />
+          <ScalarProperty Name="pPM_ID" ColumnName="pPM_ID" />
+          <ScalarProperty Name="pCust_ID" ColumnName="pCust_ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Skills">
+      <EntityTypeMapping TypeName="PMAModel.Skill">
+        <MappingFragment StoreEntitySet="Skills">
+          <ScalarProperty Name="s_ID" ColumnName="s_ID" />
+          <ScalarProperty Name="s_Name" ColumnName="s_Name" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="PMAModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="id" ColumnName="id" />
+          <ScalarProperty Name="username" ColumnName="username" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="firstName" ColumnName="firstName" />
+          <ScalarProperty Name="lastName" ColumnName="lastName" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="phoneNo" ColumnName="phoneNo" />
+          <ScalarProperty Name="job" ColumnName="job" />
+          <ScalarProperty Name="image" ColumnName="image" />
+          <ScalarProperty Name="type" ColumnName="type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="DeveloperToSkills" TypeName="PMAModel.DeveloperToSkills" StoreEntitySet="DeveloperToSkills">
+      <EndProperty Name="Skills">
+        <ScalarProperty Name="s_ID" ColumnName="s_ID" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="id" ColumnName="d_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="ProjectToUser" TypeName="PMAModel.ProjectToUser" StoreEntitySet="ProjectToUser">
+      <EndProperty Name="Project">
+        <ScalarProperty Name="p_ID" ColumnName="p_ID" />
+      </EndProperty>
+      <EndProperty Name="User">
+        <ScalarProperty Name="id" ColumnName="u_ID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping>

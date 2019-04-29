@@ -141,29 +141,32 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\PMAEntities.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PMAEntities.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PMAEntities.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PMAEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PMAEntities.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>PMAEntities.edmx</DependentUpon>
+    </Compile>
     <Compile Include="Models\Project.cs">
-      <DependentUpon>User.tt</DependentUpon>
+      <DependentUpon>PMAEntities.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\ProjectToUser.cs">
+      <DependentUpon>PMAEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Skill.cs">
-      <DependentUpon>User.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>User.Context.tt</DependentUpon>
+      <DependentUpon>PMAEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\User.cs">
-      <DependentUpon>User.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>User.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="Models\User1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>User.tt</DependentUpon>
+      <DependentUpon>PMAEntities.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -1115,25 +1118,18 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
-    <Content Include="Models\User.Context.tt">
+    <Content Include="Models\PMAEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>User.edmx</DependentUpon>
-      <LastGenOutput>User.Context.cs</LastGenOutput>
+      <DependentUpon>PMAEntities.edmx</DependentUpon>
+      <LastGenOutput>PMAEntities.Context.cs</LastGenOutput>
     </Content>
-    <Content Include="Models\User.tt">
+    <Content Include="Models\PMAEntities.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>User.edmx</DependentUpon>
-      <LastGenOutput>User1.cs</LastGenOutput>
+      <DependentUpon>PMAEntities.edmx</DependentUpon>
+      <LastGenOutput>PMAEntities.cs</LastGenOutput>
     </Content>
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <EntityDeploy Include="Models\User.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>User.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\User.edmx.diagram">
-      <DependentUpon>User.edmx</DependentUpon>
-    </Content>
     <Content Include="design\bower_components\bootstrap-tour\.bower.json" />
     <Content Include="design\bower_components\bootstrap-tour\.gitignore" />
     <Content Include="design\bower_components\bootstrap-tour\.travis.yml" />
@@ -1312,6 +1308,13 @@
     <Content Include="design\fonts\glyphicons-halflings-regular.eot" />
     <Content Include="design\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="design\fonts\glyphicons-halflings-regular.woff" />
+    <EntityDeploy Include="Models\PMAEntities.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>PMAEntities.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="Models\PMAEntities.edmx.diagram">
+      <DependentUpon>PMAEntities.edmx</DependentUpon>
+    </Content>
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -1345,6 +1348,7 @@
     <Content Include="Views\Project\Details.cshtml" />
     <Content Include="Views\Project\Edit.cshtml" />
     <Content Include="Views\Project\Index.cshtml" />
+    <Content Include="Views\Shared\_Layout2.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

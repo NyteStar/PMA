@@ -1,0 +1,131 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="PMAModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'PMA.dbo.DeveloperToSkills' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="DeveloperToSkills">
+    <Key>
+      <PropertyRef Name="d_ID" />
+      <PropertyRef Name="s_ID" />
+    </Key>
+    <Property Name="d_ID" Type="int" Nullable="false" />
+    <Property Name="s_ID" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Project">
+    <Key>
+      <PropertyRef Name="p_ID" />
+    </Key>
+    <Property Name="p_ID" Type="int" Nullable="false" />
+    <Property Name="pName" Type="nvarchar" MaxLength="100" Nullable="false" />
+    <Property Name="pDesc" Type="nvarchar(max)" />
+    <Property Name="pPM_ID" Type="int" Nullable="false" />
+    <Property Name="pCust_ID" Type="int" Nullable="false" />
+    <Property Name="pStatus" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ProjectToUser">
+    <Key>
+      <PropertyRef Name="r_ID" />
+    </Key>
+    <Property Name="r_ID" Type="int" Nullable="false" />
+    <Property Name="p_ID" Type="int" Nullable="false" />
+    <Property Name="u_ID" Type="int" Nullable="false" />
+    <Property Name="response" Type="int" />
+  </EntityType>
+  <EntityType Name="Skills">
+    <Key>
+      <PropertyRef Name="s_ID" />
+    </Key>
+    <Property Name="s_ID" Type="int" Nullable="false" />
+    <Property Name="s_Name" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="id" />
+    </Key>
+    <Property Name="id" Type="int" Nullable="false" />
+    <Property Name="username" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="password" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="firstName" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="lastName" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="email" Type="nvarchar" MaxLength="250" Nullable="false" />
+    <Property Name="phoneNo" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="job" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="image" Type="image" />
+    <Property Name="type" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_DeveloperToSkills_Skills">
+    <End Role="Skills" Type="Self.Skills" Multiplicity="1" />
+    <End Role="DeveloperToSkills" Type="Self.DeveloperToSkills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Skills">
+        <PropertyRef Name="s_ID" />
+      </Principal>
+      <Dependent Role="DeveloperToSkills">
+        <PropertyRef Name="s_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_DeveloperToSkills_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="DeveloperToSkills" Type="Self.DeveloperToSkills" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="DeveloperToSkills">
+        <PropertyRef Name="d_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectToUser_Project">
+    <End Role="Project" Type="Self.Project" Multiplicity="1" />
+    <End Role="ProjectToUser" Type="Self.ProjectToUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Project">
+        <PropertyRef Name="p_ID" />
+      </Principal>
+      <Dependent Role="ProjectToUser">
+        <PropertyRef Name="p_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_ProjectToUser_User">
+    <End Role="User" Type="Self.User" Multiplicity="1" />
+    <End Role="ProjectToUser" Type="Self.ProjectToUser" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="id" />
+      </Principal>
+      <Dependent Role="ProjectToUser">
+        <PropertyRef Name="u_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="PMAModelStoreContainer">
+    <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="ProjectToUser" EntityType="Self.ProjectToUser" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Skills" EntityType="Self.Skills" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeveloperToSkills" EntityType="Self.DeveloperToSkills" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [DeveloperToSkills].[d_ID] AS [d_ID], 
+    [DeveloperToSkills].[s_ID] AS [s_ID]
+    FROM [dbo].[DeveloperToSkills] AS [DeveloperToSkills]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_DeveloperToSkills_Skills" Association="Self.FK_DeveloperToSkills_Skills">
+      <End Role="Skills" EntitySet="Skills" />
+      <End Role="DeveloperToSkills" EntitySet="DeveloperToSkills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_DeveloperToSkills_User" Association="Self.FK_DeveloperToSkills_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="DeveloperToSkills" EntitySet="DeveloperToSkills" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectToUser_Project" Association="Self.FK_ProjectToUser_Project">
+      <End Role="Project" EntitySet="Project" />
+      <End Role="ProjectToUser" EntitySet="ProjectToUser" />
+    </AssociationSet>
+    <AssociationSet Name="FK_ProjectToUser_User" Association="Self.FK_ProjectToUser_User">
+      <End Role="User" EntitySet="User" />
+      <End Role="ProjectToUser" EntitySet="ProjectToUser" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
