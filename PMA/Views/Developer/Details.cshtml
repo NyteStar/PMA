@@ -66,7 +66,7 @@
                             <td>@item.Cust</td>
                             <td><button onclick="location.href = '@Url.Action("ProjectRespond", "Developer", new {uId=@Model.Developer.id, pId=@item.p_ID, res=1 })'"
                                         style="color: black">Accept</button>
-                                <button onclick="location.href = '@Url.Action("ProjectRespond", "Developer", new {uId=@Model.Developer.id, pId=@item.p_ID, res=2 })'" style="color: black" onclick="">Reject</button></td>
+                                <button onclick="location.href = '@Url.Action("ProjectRespond", "Developer", new {uId=@Model.Developer.id, pId=@item.p_ID, res=2 })'" style="color: black">Reject</button></td>
                         </tr>
                     }
                         </tbody>
@@ -116,20 +116,19 @@
                         </tr>
                     </thead>
                     <tbody>
-
                     @foreach (Project item in Model.acceptedProjects)
-                    {
-                        if (item.pStatus.Equals(2))
-                        {
-                            <tr>
-                                <td>@item.p_ID</td>
-                                <td>@item.pName</td>
-                                <td>@item.pDesc</td>
-                                <td>@item.Pm</td>
-                                <td>@item.Cust</td>
-                            </tr>
-                        }
-                    }
+                            {
+                                if (item.pStatus.Equals(2))
+                                {
+                                    <tr>
+                                        <td>@item.p_ID</td>
+                                        <td>@item.pName</td>
+                                        <td>@item.pDesc</td>
+                                        <td>@item.Pm</td>
+                                        <td>@item.Cust</td>
+                                    </tr>
+                                }
+                            }
                     </tbody>
                 </table>
             </div>
@@ -137,7 +136,11 @@
         <div class="column right" style="background-color: #bbb;">
             <div class="container">
                 <div class="row">
+
+                    @if (Model.Developer.image != null)
+                    {
                     <img src="data:image/png;base64,@(Convert.ToBase64String(Model.Developer.image))" height="250" width="250" class="img-rounded img-responsive">
+                    }
                 </div>
                 <div class="center">
                     <h3 class="center">@Model.Developer.firstName @Model.Developer.lastName</h3>

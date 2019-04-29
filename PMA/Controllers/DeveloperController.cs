@@ -31,7 +31,7 @@ namespace PMA.Controllers
             {
                 int uId = Int32.Parse(uCookie.Value);
                 User developer = db.Users.Single(dev => dev.id == uId);
-                Image temp = Image.FromFile("C:\\Users\\NyteStar\\Downloads\\profile2.jpg");
+                Image temp = Image.FromFile("C:\\Users\\NyteStar\\Downloads\\profile3.jpeg");
                 MemoryStream strm = new MemoryStream();
                 temp.Save(strm, ImageFormat.Png);
                 byte[] imageByteArray = strm.ToArray();
@@ -72,7 +72,7 @@ namespace PMA.Controllers
             model.newProjects = newProjects;
 
             var acceptedProjects = db.Projects.Where(x => x.ProjectToUsers.Any(r => id.Equals(r.u_ID) && r.response ==1));
-
+           
             foreach (Project proj2 in acceptedProjects)
             {
                 proj2.Cust = FindUser(proj2.pCust_ID);
